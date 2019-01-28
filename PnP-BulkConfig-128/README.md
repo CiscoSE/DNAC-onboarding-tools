@@ -3,11 +3,11 @@ Bulk upload of intent for onboarding network devices.
 
 ## Changes with 1.2.8
 In 1.2.8, there is a change where the PnP workflow is integrated into the provisioning process.
-This means a device can be onboarded into a site. 
+This means a device can be onboarded into a site.
 
 There is a new API to do this, and in addition, you no longer require credentials in the day0 configuration file
 
-The other implication is that stack renumbering is part of the payload for the API call, 
+The other implication is that stack renumbering is part of the payload for the API call,
 rather than encapsulated in the workflow.
 
 The scripts in this directory take a CSV file of device serial number plus a siteName and a (day-0) template to be applied to them.
@@ -22,6 +22,17 @@ A simple example could include an initial configuration template, which contains
 The script will recognise template variables and fill them in from the CSV file.
 
 NOTE: Make sure the template is not empty.
+
+## before running the scripts
+In Cisco DNA-C go to the template editor and add an onboarding configuration template.  In the onboarding configuration template add the following template with the hostname and loopback address variables.  Save the template and then ensure you commit the template.
+
+hostname $hostname
+
+interface loopback0
+  ip address $loopback 255.255.255.255
+  no shut
+
+Next you will want to create a network profile.  This is a major part of the integration of the day 0 process.  Next you add your targeted site to site to the network profile.
 
 ## work_files
 Contains the inventory files.  These are CSV files with the device name, serial number, pid, Location, workflow and any variables required for the workflow template
